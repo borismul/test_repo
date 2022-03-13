@@ -8,14 +8,16 @@ class DataStreamer:
 
     def __init__(self):
         self.events_url = 'https://api.github.com/events'
-        self.github_token = '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'
+        self.github_token = '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'
         self.upload_url = f"http://{HOST}:{PORT}/add_events"
 
     def _get_call(self, token, headers, params):
         resp = get(self.events_url, auth=('borismul', token), headers=headers, params=params)
 
         if resp.status_code not in [200, 304, 403]:
+            print(resp.text)
             raise UnexpectedStatusCodeError(resp.status_code)
+
 
         return resp
 

@@ -13,7 +13,7 @@ class DataStreamer:
         self.events_url = 'https://api.github.com/events'
         self.github_token = base64.b64decode('Z2hwX1FqbEpxQ1VwVG5aWDM4dkptbm9HVmNGYU9EaE5hbzJIcjB0eg=='.encode('ascii')).decode('ascii')
         # if runs on heroku use other url
-        if get(f"http://{HOST}:{PORT}").status_code == 200:
+        if get(f"http://{HOST}:{PORT}/event_count").status_code == 200:
             self.upload_url = f"http://{HOST}:{PORT}/add_events"
         else:
             self.upload_url = f"https://lely-assignment.herokuapp.com/add_events"

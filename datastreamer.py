@@ -1,34 +1,39 @@
 from requests import get, post
 from datetime import datetime, timezone
-from .exceptions import UnexpectedStatusCodeError
+from exceptions import UnexpectedStatusCodeError
 import pandas as pd
-from config import *
 import base64
+from config import *
 
 
 class DataStreamer:
+    """ Class that is used to stream activity event data from the Github Rest API"""
 
     def __init__(self):
         self.events_url = 'https://api.github.com/events'
         self.github_token = base64.b64decode('Z2hwX1FqbEpxQ1VwVG5aWDM4dkptbm9HVmNGYU9EaE5hbzJIcjB0eg=='.encode('ascii')).decode('ascii')
-        self.upload_url = f"https://lely-assignment.herokuapp.com/add_events"
+        self.upload_url = f"http://{HOST}:{PORT}/add_events"
 
     def _get_call(self, token, headers, params):
+        """ Get data from the Github Rest API"""
         resp = get(self.events_url, auth=('borismul', token), headers=headers, params=params)
 
         if resp.status_code not in [200, 304, 403]:
-            print(resp.text)
             raise UnexpectedStatusCodeError(resp.status_code)
-
 
         return resp
 
     def safe_get_call(self, token, headers, params):
+        """ Safe call to the Github API. Retries a maximum of 5 times before giving an error"""
 
-        error = True
         max_retries = 5
+
+        # Set some initial parameters
+        error = True
         retries = 0
         resp = None
+
+        # Try to get a result from the Github API 5 times
         while error and retries <= max_retries:
 
             try:
@@ -46,14 +51,17 @@ class DataStreamer:
         return resp
 
     def post_data_to_db(self, data):
+        """ Upload data to the Github Metric API"""
         res = post(self.upload_url, data=data)
         return res
 
     def run(self):
+        """ Start the data stream process"""
         headers = {'If-None-Match': None}
         params = {'per_page': 100,
                   'page': 1}
 
+        # For measuring time to not spam the Github API
         tic = None
         poll_rate = None
 

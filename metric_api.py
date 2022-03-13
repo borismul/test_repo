@@ -8,7 +8,7 @@ from fastapi import FastAPI, Query, HTTPException, status
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from data_manager.events_db import EventsDB
+from db import EventsDB
 
 # This is necessary for plotting from non-main threads
 mpl.use('Agg')
@@ -82,6 +82,7 @@ def get_events(event_type: Optional[EventNames] = Query(None,
                                                                     "events. Can be: 'WatchEvent', 'PullRequestEvent' "
                                                                     "or 'IssuesEvent'"),
                repo_name: str = Query(None, description='Return only events from a specific repo.')):
+
     # Select specific events if desired.
     if event_type is None:
         df = pd.concat(db.events)
@@ -97,6 +98,7 @@ def get_events(event_type: Optional[EventNames] = Query(None,
 @app.get("/avg_time_between_pull_requests", tags=['avg_time_between_pull_requests'])
 def avg_time_between_pull_requests(
         repo_name: str = Query(None, description='Get the average time in seconds between pull requests for this repo name.')):
+
     # Obtain opened pull requests from specific repo
     df = db.events['PullRequestEvent']
     df_repo = df[(df['repo'] == repo_name) & (df['action'] == 'opened')]
@@ -155,6 +157,7 @@ def acivity_over_time(offset_minutes: Optional[float] = Query(None,
     # Loop over the dfs and fill the x and y data
     for df in dfs:
 
+        df = df.copy()
         # Filter for specific offset
         if offset_minutes is not None:
             df = df[df['created_at'] > df['created_at'].max() - timedelta(minutes=float(offset_minutes))]

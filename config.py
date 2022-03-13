@@ -1,2 +1,4 @@
-HOST = '0.0.0.0'
-PORT = 5000
+import socket
+
+HOST = socket.gethostbyname(socket.gethostname())
+PORT = 5463

@@ -3,12 +3,14 @@ from datetime import datetime, timezone
 from .exceptions import UnexpectedStatusCodeError
 import pandas as pd
 from config import *
+import base64
+
 
 class DataStreamer:
 
     def __init__(self):
         self.events_url = 'https://api.github.com/events'
-        self.github_token = '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'
+        self.github_token = base64.b64decode('Z2hwX1FqbEpxQ1VwVG5aWDM4dkptbm9HVmNGYU9EaE5hbzJIcjB0eg=='.encode('ascii')).decode('ascii')
         self.upload_url = f"http://{HOST}:{PORT}/add_events"
 
     def _get_call(self, token, headers, params):

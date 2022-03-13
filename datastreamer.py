@@ -5,6 +5,7 @@ from exceptions import UnexpectedStatusCodeError
 import pandas as pd
 import base64
 from config import HOST, PORT
+from typing import Dict
 
 
 class DataStreamer:
@@ -13,9 +14,10 @@ class DataStreamer:
     def __init__(self):
         self.events_url = 'https://api.github.com/events'
         self.github_token = base64.b64decode('Z2hwX1FqbEpxQ1VwVG5aWDM4dkptbm9HVmNGYU9EaE5hbzJIcjB0eg=='.encode('ascii')).decode('ascii')
+        # self.upload_url = f"http://{HOST}:{PORT}/add_events"
         self.upload_url = f"https://lely-assignment.herokuapp.com/add_events"
 
-    def _get_call(self, token, headers, params):
+    def _get_call(self, token: str, headers: Dict[str, any], params: Dict[str, any]):
         """ Get data from the Github Rest API"""
         resp = get(self.events_url, auth=('borismul', token), headers=headers, params=params)
 
@@ -24,7 +26,7 @@ class DataStreamer:
 
         return resp
 
-    def safe_get_call(self, token, headers, params):
+    def safe_get_call(self, token: str, headers: Dict[str, any], params: Dict[str, any]):
         """ Safe call to the Github API. Retries a maximum of 5 times before giving an error"""
 
         max_retries = 5
@@ -51,7 +53,7 @@ class DataStreamer:
 
         return resp
 
-    def post_data_to_db(self, data):
+    def post_data_to_db(self, data: str):
         """ Upload data to the Github Metric API"""
         res = post(self.upload_url, data=data)
         return res

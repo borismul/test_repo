@@ -23,8 +23,8 @@ tags_metadata = [
     },
     {
         "name": "get_events",
-        "description": "Returns all or events of a specific type or specific event. Will be slow with a large number "
-                       "of events. Should ideally contain paging..."
+        "description": "Returns all or events of a specific type or specific event. Will show 100 events maximally"
+                       ". Should ideally contain paging..."
     },
     {
         "name": "avg_time_between_pull_requests",
@@ -86,11 +86,18 @@ def get_events(event_type: Optional[EventNames] = Query(None,
     # Select specific events if desired.
     if event_type is None:
         df = pd.concat(db.events)
+
+        if repo_name is not None:
+            df = df[df['repo'] == repo_name]
+
+        df = df.head(100)
     else:
         df = db.events[event_type]
 
-    if repo_name is not None:
-        df = df[df['repo'] == repo_name]
+        if repo_name is not None:
+            df = df[df['repo'] == repo_name]
+
+        df = df.head(100)
 
     return df.to_dict('records')
 

@@ -1,3 +1,3 @@
 import socket
-HOST = socket.gethostbyname(socket.gethostname())
-PORT = 5354
+HOST = '127.0.0.1'
+PORT = 8000

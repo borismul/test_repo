@@ -19,6 +19,7 @@ class DataStreamer:
         except requests.exceptions.ConnectionError as e:
             self.upload_url = f"https://lely-assignment.herokuapp.com/add_events"
 
+
     def _get_call(self, token, headers, params):
         """ Get data from the Github Rest API"""
         resp = get(self.events_url, auth=('borismul', token), headers=headers, params=params)

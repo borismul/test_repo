@@ -13,10 +13,6 @@ class DataStreamer:
     def __init__(self):
         self.events_url = 'https://api.github.com/events'
         self.github_token = base64.b64decode('Z2hwX1FqbEpxQ1VwVG5aWDM4dkptbm9HVmNGYU9EaE5hbzJIcjB0eg=='.encode('ascii')).decode('ascii')
-        # If runs locally, use correct ip and port, else use Heroku
-        # try:
-        #     self.upload_url = f"http://{HOST}:{PORT}/add_events"
-        # except requests.exceptions.ConnectionError as e:
         self.upload_url = f"https://lely-assignment.herokuapp.com/add_events"
 
     def _get_call(self, token, headers, params):
@@ -91,12 +87,9 @@ class DataStreamer:
             result['action'] = result['payload.action'].fillna('No Action')
             result = result.drop(columns=['repo.name', 'payload.action'])
             result['created_at'] = pd.to_datetime(result['created_at'])
-            poll_rate = 0.8
+            poll_rate = 1.5
             headers['If-None-Match'] = etag
             data = result.to_json(orient='records', date_format='iso')
             self.post_data_to_db(data)
-            # df = pd.DataFrame().from_records(get('http://127.0.0.1:8000/events').json())
-            # print(df.to_string())
 
-# if __name__ == "__main__":
-#     DataStreamer().run()
+

@@ -11,7 +11,7 @@ class DataStreamer:
     def __init__(self):
         self.events_url = 'https://api.github.com/events'
         self.github_token = base64.b64decode('Z2hwX1FqbEpxQ1VwVG5aWDM4dkptbm9HVmNGYU9EaE5hbzJIcjB0eg=='.encode('ascii')).decode('ascii')
-        self.upload_url = f"http://{HOST}:{PORT}/add_events"
+        self.upload_url = f"https://lely-assignment.herokuapp.com/add_events"
 
     def _get_call(self, token, headers, params):
         resp = get(self.events_url, auth=('borismul', token), headers=headers, params=params)

@@ -1,4 +1,1 @@
-web: python - <<'EOF'
-print("I'm running Python.")
-print("Are you now?")
-EOF
+web: python -c $'import * from main\nrun_event_streamer()'

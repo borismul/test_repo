@@ -14,10 +14,10 @@ class DataStreamer:
         self.events_url = 'https://api.github.com/events'
         self.github_token = base64.b64decode('Z2hwX1FqbEpxQ1VwVG5aWDM4dkptbm9HVmNGYU9EaE5hbzJIcjB0eg=='.encode('ascii')).decode('ascii')
         # If runs locally, use correct ip and port, else use Heroku
-        try:
-            self.upload_url = f"http://{HOST}:{PORT}/add_events"
-        except requests.exceptions.ConnectionError as e:
-            self.upload_url = f"https://lely-assignment.herokuapp.com/add_events"
+        # try:
+        #     self.upload_url = f"http://{HOST}:{PORT}/add_events"
+        # except requests.exceptions.ConnectionError as e:
+        self.upload_url = f"https://lely-assignment.herokuapp.com/add_events"
 
 
     def _get_call(self, token, headers, params):

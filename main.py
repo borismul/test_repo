@@ -12,6 +12,7 @@ def run_event_streamer():
 
 
 if __name__ == "__main__":
-    Process(target=run_event_streamer).start()
-    uvicorn.run("API.api_main:app", host=HOST, port=PORT, reload=True, debug=True)
+    # Process(target=run_event_streamer).start()
+    # uvicorn.run("API.api_main:app", host=HOST, port=PORT, reload=True, debug=True)
+    run_event_streamer()
 

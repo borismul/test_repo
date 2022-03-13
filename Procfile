@@ -1,1 +1,1 @@
-worker: python main.py
+web: uvicorn API.api_main:app

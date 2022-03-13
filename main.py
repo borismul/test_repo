@@ -2,8 +2,11 @@ from event_streamer.api_caller import DataStreamer
 from multiprocessing import Process
 import uvicorn
 from config import *
+import time
+
 
 def run_event_streamer():
+    time.sleep(10)
     ds = DataStreamer()
     ds.run()
 

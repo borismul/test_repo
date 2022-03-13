@@ -1,1 +1,1 @@
-web: python -c $'import * from main\nrun_event_streamer()'
+web: python -c $'from main import *\nrun_event_streamer()'

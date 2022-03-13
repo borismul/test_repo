@@ -13,5 +13,5 @@ def run_event_streamer():
 
 if __name__ == "__main__":
     Process(target=run_event_streamer).start()
-    uvicorn.run("metric_api:app", host=HOST, port=PORT, reload=True, debug=True)
+    # uvicorn.run("metric_api:app", host=HOST, port=PORT, reload=True, debug=True)
 

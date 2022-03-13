@@ -1,1 +1,4 @@
-web: python && import * from main && run_event_streamer()
+web: python - <<'EOF'
+print("I'm running Python.")
+print("Are you now?")
+EOF

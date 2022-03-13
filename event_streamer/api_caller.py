@@ -8,7 +8,7 @@ class DataStreamer:
 
     def __init__(self):
         self.events_url = 'https://api.github.com/events'
-        self.github_token = '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'
+        self.github_token = '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'
         self.upload_url = f"http://{HOST}:{PORT}/add_events"
 
     def _get_call(self, token, headers, params):

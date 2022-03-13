@@ -1,3 +1,4 @@
 import socket
-HOST = socket.gethostbyname(socket.gethostname())
-PORT = 8000
+# HOST = socket.gethostbyname(socket.gethostname())
+HOST = '0.0.0.0'
+PORT = 5032

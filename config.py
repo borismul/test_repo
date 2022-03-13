@@ -1,3 +1,2 @@
-import socket
-HOST = socket.gethostname()
-PORT = 5032
+HOST = '0.0.0.0'
+PORT = 5000
